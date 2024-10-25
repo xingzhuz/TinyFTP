@@ -1,6 +1,7 @@
 
 ## 目录结构
 
+```plaintext
 netSocket/
 ├── Makefile            # 根目录的 Makefile
 ├── operation.log       # 根目录的 ftp 服务器操作日志
@@ -36,7 +37,7 @@ netSocket/
     ├── server.h        # 服务器端头文件
     ├── client.h        # 客户端头文件
     └── common.h        # 公共头文件        
-
+```
 
      
 
