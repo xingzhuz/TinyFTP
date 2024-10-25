@@ -1,0 +1,7 @@
+{
+    "db_ip": "192.168.8.102",
+    "db_port": 3306,
+    "db_user": "root",
+    "db_password": "1",
+    "db_name": "ftp_linux"
+}
