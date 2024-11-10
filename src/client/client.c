@@ -11,7 +11,7 @@ int file_exists(const char *filename)
 int main()
 {
     // 服务器 IP 和端口
-    const char *server_ip = "127.0.0.1";
+    const char *server_ip = "192.168.208.128";
     int server_port = Port;
     int fd;
 

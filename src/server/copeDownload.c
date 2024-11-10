@@ -10,11 +10,12 @@ int copeDownload(int fd, char *username)
     unsigned int total_checksum = 0;               // 总体校验和
 
     // 接收文件名
-    read(fd, filename, sizeof(filename));
+    size_t size = read(fd, filename, sizeof(filename));
+    filename[size] = '\0';
 
     // 构建文件路径
     char filepath[256];
-    snprintf(filepath, sizeof(filepath), "%s%s", files_dir, filename);
+    snprintf(filepath, sizeof(filepath), "%s%s", FILES_DIR, filename);
 
     // 打开文件准备读取
     FILE *fp = fopen(filepath, "rb");
@@ -37,6 +38,18 @@ int copeDownload(int fd, char *username)
         perror("Memory allocation failed");
         return 0;
     }
+
+    // 发送文件大小是新增的-------------------------------------------------------
+    // 获取文件大小
+    uint32_t file_size = 0; // 修改为 uint32_t 类型
+    fseek(fp, 0, SEEK_END);
+    file_size = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    // 发送文件大小
+    write(fd, &file_size, sizeof(file_size)); // 发送文件大小
+
+    usleep(1000);
 
     // 一次性读取一个字节，一共读取 BUFFER_SIZE 字节
     // 循环的原因是可能文件大于超过 BUFFER_SIZE
@@ -63,13 +76,12 @@ int copeDownload(int fd, char *username)
     if (strcmp(status, "success") == 0)
     {
         printf("接收方数据校验成功!\n");
+        printf("当前文件所有数据块 (用户:%s) 接收完毕, 等待客户端继续操作!\n", username);
     }
     else if (strcmp(status, "error") == 0)
     {
         printf("接收方数据校验错误!\n");
     }
-
-    printf("当前文件所有数据块 (用户:%s) 接收完毕, 等待客户端继续操作!\n", username);
 
     // 加锁，保证只有一个进程写这个日志
     pthread_mutex_lock(&logo_mutex);

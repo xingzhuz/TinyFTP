@@ -142,6 +142,7 @@ void checkoutUser(const cJSON *username, const cJSON *password, struct SockInfo 
             }
             else
             {
+                printf("21\n");
                 // 密码错误，发送失败消息
                 send_json_message(info->fd, "error", "Invalid password");
                 close(info->fd);

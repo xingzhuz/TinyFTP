@@ -127,6 +127,9 @@ void download_file(int fd, char *username)
                 perror("Memory allocation failed");
                 return;
             }
+
+            // 接收文件大小，这个客户端没啥用，是用与QT客户端的
+            read(fd, response, sizeof response);
             int bytes;
             while ((bytes = read(fd, filebuf, BUFFER_SIZE)) > 0)
             {
@@ -140,7 +143,7 @@ void download_file(int fd, char *username)
                     break; // 文件已全部接收
             }
 
-            // 通知客户端，服务器准备好接收了
+            // 通知服务器端，客户端准备好接收了
             write(fd, "start", 6);
 
             // 接收传来的总体校验和
@@ -153,16 +156,16 @@ void download_file(int fd, char *username)
             // 验证校验和
             if (calculated_final_checksum == received_final_checksum)
             {
-                printf("校验和匹配，数据传输成功，等待继续传输\n");
+                printf("下载文件:校验和匹配，文件下载成功!\n");
+                // 发送校验成功的反馈
+                send_json_message(fd, "success", "校验成功");
             }
             else
             {
-                printf("校验和不匹配，数据部分有误\n");
+                printf("下载文件:校验和不匹配，下载的文件数据部分有误\n");
+                // 发送校验成功的发聩
+                send_json_message(fd, "error", "校验成功");
             }
-
-            // 发送校验成功的发聩
-            send_json_message(fd, "success", "校验成功");
-            printf("文件下载成功!\n");
 
             fclose(fp);
             free(filebuf);

@@ -57,8 +57,7 @@ void upload_file(int fd, char *username)
 
     // 读取服务器的文件是否存在响应
     read(fd, response, sizeof(response));
-    // 解析 JSON 响应
-    parse_json_message(response, status, message);
+    parse_json_message(response, status, message); // 解析 JSON 响应
 
     // 如果文件存在，处理文件替换问题
     if (strcmp(status, "success") == 0)
@@ -105,7 +104,7 @@ void upload_file(int fd, char *username)
     // 读取服务器准备接收数据的响应
     read(fd, response, sizeof(response));
 
-    // 传输结束后，将总体校验和通过管道发送给写进程
+    // 传输结束后，将总体校验和发送给服务器
     unsigned char final_checksum = total_checksum & 0xFF; // 取低8位
     write(fd, &final_checksum, 1);                        // 管道传输总校验和
 
@@ -114,14 +113,12 @@ void upload_file(int fd, char *username)
     parse_json_message(response, status, message); // 解析 json 数据
     if (strcmp(status, "success") == 0)
     {
-        printf("服务器数据校验成功!\n");
+        printf("服务器数据校验成功，文件上传成功!\n");
     }
     else if (strcmp(status, "error") == 0)
     {
-        printf("服务器数据校验错误!\n");
+        printf("上传文件: 服务器数据校验有误!\n");
     }
-
-    printf("文件上传成功!\n\n");
 
     fclose(fp);
     free(filebuf);

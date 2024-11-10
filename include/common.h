@@ -16,7 +16,7 @@
 #include <errno.h>
 
 #define Port 8091
-#define BUFFER_SIZE (1024 * 32)
+#define BUFFER_SIZE (1024 * 8)
 
 // 定义通信结构体
 struct SockInfo
@@ -29,7 +29,7 @@ struct SockInfo
 
 // 全局变量声明
 extern struct SockInfo infos[128]; // 用 extern 声明全局变量
-extern char *files_dir;
+extern char *FILES_DIR;
 extern pthread_mutex_t logo_mutex;
 
 // 文件操作记录结构体

@@ -11,8 +11,10 @@ int copeUpload(int fd, char *username)
     // 接收文件名
     read(fd, filename, sizeof(filename));
 
+    printf("客户端发送来的文件名:%s\n", filename);
+
     // 构建文件存储路径
-    snprintf(filepath, sizeof(filepath), "%s%s", files_dir, filename);
+    snprintf(filepath, sizeof(filepath), "%s%s", FILES_DIR, filename);
 
     // 使用文件名存在的处理过程
     if (file_exists(filepath))
@@ -55,6 +57,7 @@ int copeUpload(int fd, char *username)
         perror("Memory allocation failed");
         return 0;
     }
+
     int bytes;
     while ((bytes = read(fd, filebuf, BUFFER_SIZE)) > 0)
     {
@@ -64,7 +67,7 @@ int copeUpload(int fd, char *username)
 
         if (bytes < BUFFER_SIZE)
         {
-            printf("当前文件所有数据块接收完毕, 等待客户端继续发送!\n");
+            printf("当前文件所有数据块接收完毕, 即将进行校验!\n");
             break;
         }
     }
@@ -72,16 +75,17 @@ int copeUpload(int fd, char *username)
     // 通知客户端，服务器准备好接收了
     write(fd, "start", 6);
 
-    // 接收传来的总校验和
+    // 接收客户端传来的总校验和
     unsigned char received_final_checksum;
     read(fd, &received_final_checksum, 1);
 
     // 计算最终校验和的低8位
     unsigned char calculated_final_checksum = total_checksum & 0xFF;
+
     // 验证校验和
     if (calculated_final_checksum == received_final_checksum)
     {
-        printf("校验和匹配，数据传输成功，等待继续传输\n");
+        printf("校验和匹配，数据传输成功\n");
     }
     else
     {
