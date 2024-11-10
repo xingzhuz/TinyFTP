@@ -46,6 +46,17 @@ netSocket/
 
 - 修改`dbconf.json` 文件，`db_ip` 修改为数据库服务器，即所在的电脑 `ip`
 
+```sql
+-- 首先需要先创建一个数据库
+CREATE DATABASE mysql_linux;
+USE mysql_linux;
+
+-- 创建用户表
+CREATE TABLE user (
+    username CHAR(50) DEFAULT NULL,
+    passwd CHAR(50) DEFAULT NULL
+);
+```
 
 ```shell
 # 编译
@@ -157,18 +168,24 @@ make clean
 
 ### 客户端
 
-<img src="https://bu.dusays.com/2024/10/25/671bb5dc0a70c.png" alt="服务器端" width="450px" height="200px"></img>
+<img src="https://bu.dusays.com/2024/10/25/671bb5dc0a70c.png" alt="客户端" width="450px" height="200px"></img>
 
-<img src="https://bu.dusays.com/2024/10/25/671bb5dd467c8.png" alt="服务器端" width="450px" height="300px"></img>
+<img src="https://bu.dusays.com/2024/10/25/671bb5dd467c8.png" alt="客户端" width="450px" height="300px"></img>
 
-<img src="https://bu.dusays.com/2024/10/25/671bb5de5c199.png" alt="服务器端" width="250px" height="230px"></img>
-
-
+<img src="https://bu.dusays.com/2024/11/10/6730c873aceb8.png" alt="客户端" width="450px" height="250px"></img>
 
 
 
-## ### QT客户端
 
+
+### QT客户端
+
+<img src="https://bu.dusays.com/2024/11/10/6730c8aa194ef.png" alt="QT客户端" width="500px" height="360px"></img>
+
+<img src="https://bu.dusays.com/2024/11/10/6730c8accdb1f.png" alt="QT客户端" width="500px" height="450px"></img>
+
+
+<img src="https://bu.dusays.com/2024/11/10/6730c8af39fb1.png" alt="QT客户端" width="500px" height="450px"></img>
 
 
 
