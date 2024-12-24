@@ -39,24 +39,52 @@ netSocket/
     └── common.h        # 公共头文件        
 ```
 
-​     
+## 环境配置
 
-## 编译运行
+- `mysql`配置：
+    - CSDN：[https://blog.csdn.net/2303_76953932/article/details/142703683?spm=1001.2014.3001.5501](https://blog.csdn.net/2303_76953932/article/details/142703683?spm=1001.2014.3001.5501)
+    - 我的自建博客：[https://xingzhu.top/archives/shu-ju-ku-lian-jie-chi-huan-jing-pei-zhi#ubuntu-%E5%AE%89%E8%A3%85-mysql](https://xingzhu.top/archives/shu-ju-ku-lian-jie-chi-huan-jing-pei-zhi#ubuntu-%E5%AE%89%E8%A3%85-mysql)
 
+
+- `csjon`配置（没有`git`就去安装一个）
+
+```shell
+git clone https://github.com/DaveGamble/cJSON.git
+cd cJSON/
+mkdir build
+cd build/
+cmake ..
+make
+make install
+```
 
 - 修改`dbconf.json` 文件，`db_ip` 修改为数据库服务器，即所在的电脑 `ip`
 
 ```sql
 -- 首先需要先创建一个数据库
-CREATE DATABASE mysql_linux;
-USE mysql_linux;
+CREATE DATABASE ftp_linux;
+USE ftp_linux;
 
 -- 创建用户表
 CREATE TABLE user (
     username CHAR(50) DEFAULT NULL,
-    passwd CHAR(50) DEFAULT NULL
+    password CHAR(50) DEFAULT NULL
 );
+
+# 新建用户和密码，自己更改
+INSERT INTO user (username, passwd) VALUES ('user', 'password');
 ```
+
+- 在`client`文件目录中的`client.c`中`main`函数中的这个修改为自己的服务器`ip`
+- 查询方式查看`ifconfig -a`
+
+```c	
+const char *server_ip = "xxxx";
+```
+
+ 
+
+## 编译运行
 
 ```shell
 # 编译
