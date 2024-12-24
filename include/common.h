@@ -9,8 +9,6 @@
 #include <pthread.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <openssl/md5.h>
-#include <openssl/evp.h>
 #include <iconv.h>
 #include <cjson/cJSON.h>
 #include <errno.h>
