@@ -40,11 +40,11 @@ all: $(SERVER_TARGET) $(CLIENT_TARGET)
 
 # 规则：生成服务器可执行文件
 $(SERVER_TARGET): $(SERVER_OBJS) $(COMMON_OBJS) | $(BIN_DIR)
-	$(CC) $(CFLAGS) -o $@ $^ -lssl -lcrypto -lcjson -lmysqlclient -lncurses
+	$(CC) $(CFLAGS) -o $@ $^ -lssl -lcrypto -lcjson -lmysqlclient -lpthread
 
 # 规则：生成客户端可执行文件
 $(CLIENT_TARGET): $(CLIENT_OBJS) $(COMMON_OBJS) | $(BIN_DIR)
-	$(CC) $(CFLAGS) -o $@ $^ -lssl -lcrypto -lcjson -lmysqlclient -lncurses
+	$(CC) $(CFLAGS) -o $@ $^ -lssl -lcrypto -lcjson -lmysqlclient -lpthread
 
 # 规则：编译 server/ 目录下的 .c 文件生成 .o 文件
 $(OBJ_DIR)/%.o: $(SERVER_DIR)/%.c | $(OBJ_DIR)
