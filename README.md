@@ -100,7 +100,7 @@ make clean
 ./bin/server_ftp
 
 # 客户端
-./bin/cilent_ftp
+./bin/client_ftp
 ```
 
 
