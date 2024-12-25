@@ -72,7 +72,7 @@ CREATE TABLE user (
 );
 
 # 新建用户和密码，自己更改
-INSERT INTO user (username, passwd) VALUES ('user', 'password');
+INSERT INTO user (username, password) VALUES ('user', 'password');
 ```
 
 - 在`client`文件目录中的`client.c`中`main`函数中的这个修改为自己的服务器`ip`
